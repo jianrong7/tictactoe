@@ -61,8 +61,6 @@ header p {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);;
-    /* column-gap: 10px;
-    row-gap: 10px; */
     width: 500px;
     height: 500px;
     background-color: #2d2d2d;
@@ -73,7 +71,6 @@ header p {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 4em;
     font-weight: bold;
     cursor: pointer;
 }
@@ -81,11 +78,13 @@ header p {
     background-color: black;
     transition-duration: .2s;
 }
-#x {
+.x {
     color: #00aac4;
     cursor: not-allowed;
+    font-size: 4em;
 }
-#o {
+.o {
     color: #e43a20;
     cursor: not-allowed;
+    font-size: 4em;
 }
