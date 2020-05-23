@@ -4,3 +4,85 @@ tic tae toe box - #2d2d2d
 winner row - #444444
 circle - #e43a20
 cross - #00aac4 */
+body {
+    top: 0;
+    left: 0;
+    margin: auto;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    box-sizing: border-box;
+    background-color: #222222;
+    color: #ffffff;
+    width: 70vw;
+}
+header {
+    text-align: center;
+    font-size: 30px;
+    margin: 30px;
+    border-bottom: 2px solid #2d2d2d;
+    padding-bottom: 10px;
+    border-radius: 5px;
+}
+header p {
+    font-size: 15px;
+}
+.indicator {
+    text-align: center;
+    display: flex;
+    margin: 30px;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 25px;
+}
+#xIndicator {
+    background-color: #00aac4;
+    display: flex;
+    padding: 20px;
+    margin-right: 70px;
+    border: 2px solid #00aac4;
+    border-radius: 10px;
+}
+#xCounter {
+    margin-left: 50px;
+}
+#oIndicator {
+    background-color: #e43a20;
+    display: flex;
+    padding: 20px;
+    margin-left: 70px;
+    border: 2px solid #e43a20;
+    border-radius: 10px;
+}
+#oCounter {
+    margin-left: 50px;
+}
+.board {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);;
+    /* column-gap: 10px;
+    row-gap: 10px; */
+    width: 500px;
+    height: 500px;
+    background-color: #2d2d2d;
+    border-radius: 10px;
+}
+.cell {
+    border: 3px solid #222222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+    font-weight: bold;
+}
+.cell:hover {
+    background-color: black;
+    transition-duration: .2s;
+}
+#x {
+    color: #00aac4;
+}
+#o {
+    color: #e43a20;
+}
