@@ -75,6 +75,7 @@ header p {
     align-items: center;
     font-size: 4em;
     font-weight: bold;
+    cursor: pointer;
 }
 .cell:hover {
     background-color: black;
@@ -82,7 +83,9 @@ header p {
 }
 #x {
     color: #00aac4;
+    cursor: not-allowed;
 }
 #o {
     color: #e43a20;
+    cursor: not-allowed;
 }
