@@ -16,6 +16,9 @@ let xCounter = 0;
 let oCounter = 0;
 let xCount = document.querySelector("#xCounter");
 let oCount = document.querySelector("#oCounter");
+let restartBtn = document.querySelector("#restart");
+
+restartBtn.addEventListener("click", startGame);
 
 startGame();
 
