@@ -66,37 +66,97 @@ function aiTurn() {
         
     }
 }
-function emptySquares() {
-    return [...cellElements].filter(s => s.innerHTML == "");
-}
-// restartBtn.addEventListener("click", startGame);
+// function emptySquares() {
+//     return [...cellElements].filter(cell => cell.innerHTML == "");
+// }
+// function bestSpot() {
+//     return minimax([...cellElements], O_CLASS).index;
+// }
+// function minimax(newBoard, player) {
+//     var availSpots = emptySquares();
+  
+//     if (checkWin(newBoard, X_CLASS)) {
+//       return {
+//         score: -10
+//       };
+//     } else if (checkWin(newBoard, O_CLASS)) {
+//       return {
+//         score: 10
+//       };
+//     } else if (availSpots.length === 0) {
+//       return {
+//         score: 0
+//       };
+//     }
+//     var moves = [];
+//     for (var i = 0; i < availSpots.length; i++) {
+//       var move = {};
+//       move.index = newBoard[availSpots[i]];
+//       newBoard[availSpots[i]] = player;
+  
+//       if (player == O_CLASS) {
+//         var result = minimax(newBoard, X_CLASS);
+//         move.score = result.score;
+//       } else {
+//         var result = minimax(newBoard, O_CLASS);
+//         move.score = result.score;
+//       }
+  
+//       newBoard[availSpots[i]] = move.index;
+  
+//       moves.push(move);
+//     }
+  
+//     var bestMove;
+//     if (player === O_CLASS) {
+//       var bestScore = -10000;
+//       for (var i = 0; i < moves.length; i++) {
+//         if (moves[i].score > bestScore) {
+//           bestScore = moves[i].score;
+//           bestMove = i;
+//         }
+//       }
+//     } else {
+//       var bestScore = 10000;
+//       for (var i = 0; i < moves.length; i++) {
+//         if (moves[i].score < bestScore) {
+//           bestScore = moves[i].score;
+//           bestMove = i;
+//         }
+//       }
+//     }
+  
+//     return moves[bestMove];
+// }
+  
+restartBtn.addEventListener("click", startGame);
 aiBtn.addEventListener("click", handleAI);
 
-// function startGame() {
-//     circleTurn = false;
-//     cellElements.forEach(cell => {
-//         cell.classList.remove(X_CLASS);
-//         cell.classList.remove(O_CLASS);
-//         cell.innerHTML = ""
-//         cell.removeEventListener("click", handleClick)
-//         cell.addEventListener("click", handleClick, { once: true })
-//     });
+function startGame() {
+    circleTurn = false;
+    cellElements.forEach(cell => {
+        cell.classList.remove(X_CLASS);
+        cell.classList.remove(O_CLASS);
+        cell.innerHTML = ""
+        cell.removeEventListener("click", handleClick)
+        cell.addEventListener("click", handleClick, { once: true })
+    });
     
-// }
+}
 
-// function handleClick(e) {
-//     const cell = e.target;
-//     const currentClass = circleTurn ? O_CLASS : X_CLASS
-//     placeMark(cell, currentClass)
-//     if(checkWin(currentClass)) {
-//         endGame(false, currentClass)
-//         startGame();
-//     } else if (isDraw()) {
-//         endGame(true)
-//         startGame();
-//     }
-//     swapTurns();
-// }
+function handleClick(e) {
+    const cell = e.target;
+    const currentClass = circleTurn ? O_CLASS : X_CLASS
+    placeMark(cell, currentClass)
+    if(checkWin(currentClass)) {
+        endGame(false, currentClass)
+        startGame();
+    } else if (isDraw()) {
+        endGame(true)
+        startGame();
+    }
+    swapTurns();
+}
 
 function placeMark(cell, currentClass) {
     cell.classList.add(currentClass);
