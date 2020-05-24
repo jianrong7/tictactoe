@@ -22,9 +22,25 @@ header {
     border-bottom: 2px solid #2d2d2d;
     padding-bottom: 10px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
 }
-header p {
-    font-size: 15px;
+#aiBtn {
+    background-color: #222222;
+    color: white;
+    border: none;
+    padding-top: 20px;
+    font-size: 18px;
+    width: 170px;
+    margin: auto;
+    margin-top: 5px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 10px;
+}
+#aiBtn:hover {
+    background-color: #444444;
+    border: none;
 }
 .indicator {
     text-align: center;
