@@ -66,7 +66,9 @@ function aiTurn() {
         
     }
 }
-
+function emptySquares() {
+    return [...cellElements].filter(s => s.innerHTML == "");
+}
 // restartBtn.addEventListener("click", startGame);
 aiBtn.addEventListener("click", handleAI);
 
