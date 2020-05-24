@@ -20,9 +20,6 @@ let oCount = document.querySelector("#oCounter");
 let restartBtn = document.querySelector("#restart");
 let aiBtn = document.querySelector("#aiBtn");
 
-
-aiBtn.addEventListener("click", handleAI)
-
 function handleAI() {
     circleTurn = false;
     cellElements.forEach(cell => {
@@ -33,7 +30,6 @@ function handleAI() {
         cell.addEventListener("click", handleClickAI, { once: true })
     });
 }
-
 function handleClickAI(e) {
     const cell = e.target;
     const currentClass = circleTurn ? O_CLASS : X_CLASS
@@ -48,6 +44,7 @@ function handleClickAI(e) {
     swapTurns();
     aiTurn();
 }
+
 function aiTurn() {
     const currentClass = circleTurn ? O_CLASS : X_CLASS
     for (let i = 0; i < cellElements.length; i++) {
@@ -57,21 +54,21 @@ function aiTurn() {
             if(checkWin(currentClass)) {
                 endGame(false, currentClass)
                 handleAI();
+                swapTurns();
             } else if (isDraw()) {
                 endGame(true)
                 handleAI();
+                swapTurns();
             }
             swapTurns();
             return;
         }
+        
     }
 }
 
-
-//----------------------
 // restartBtn.addEventListener("click", startGame);
-
-// startGame();
+aiBtn.addEventListener("click", handleAI);
 
 // function startGame() {
 //     circleTurn = false;
@@ -82,6 +79,7 @@ function aiTurn() {
 //         cell.removeEventListener("click", handleClick)
 //         cell.addEventListener("click", handleClick, { once: true })
 //     });
+    
 // }
 
 // function handleClick(e) {
