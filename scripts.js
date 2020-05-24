@@ -26,6 +26,10 @@ aiBtn.addEventListener("click", handleAI)
 function handleAI() {
     circleTurn = false;
     cellElements.forEach(cell => {
+        cell.classList.remove(X_CLASS);
+        cell.classList.remove(O_CLASS);
+        cell.innerHTML = ""
+        cell.removeEventListener("click", handleClickAI)
         cell.addEventListener("click", handleClickAI, { once: true })
     });
 }
@@ -34,7 +38,13 @@ function handleClickAI(e) {
     const cell = e.target;
     const currentClass = circleTurn ? O_CLASS : X_CLASS
     placeMark(cell, currentClass)
-
+    if(checkWin(currentClass)) {
+        endGame(false, currentClass)
+        handleAI();
+    } else if (isDraw()) {
+        endGame(true)
+        handleAI();
+    }
     swapTurns();
     aiTurn();
 }
@@ -44,7 +54,13 @@ function aiTurn() {
         if (cellElements[i].innerHTML == "") {
             cellElements[i].classList.add(currentClass);
             cellElements[i].innerHTML = currentClass;
-           
+            if(checkWin(currentClass)) {
+                endGame(false, currentClass)
+                handleAI();
+            } else if (isDraw()) {
+                endGame(true)
+                handleAI();
+            }
             swapTurns();
             return;
         }
