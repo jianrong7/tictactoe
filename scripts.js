@@ -10,6 +10,7 @@ const WINNING_COMBINATIONS = [
             [0, 4, 8],
             [2, 4, 6],
           ];
+
 const cellElements = document.querySelectorAll('.cell');
 let circleTurn;
 let xCounter = 0;
@@ -20,28 +21,16 @@ let restartBtn = document.querySelector("#restart");
 let aiBtn = document.querySelector("#aiBtn");
 
 
-aiBtn.addEventListener("click", handleAI)
+aiBtn.addEventListener("click", startAIGame, { once: true })
 
 function handleAI() {
-
-}
-
-restartBtn.addEventListener("click", startGame);
-
-startGame();
-
-function startGame() {
     circleTurn = false;
     cellElements.forEach(cell => {
-        cell.classList.remove(X_CLASS);
-        cell.classList.remove(O_CLASS);
-        cell.innerHTML = ""
-        cell.removeEventListener("click", handleClick)
-        cell.addEventListener("click", handleClick, { once: true })
+        cell.addEventListener("click", handleClickAI, { once: true })
     });
 }
 
-function handleClick(e) {
+function handleClickAI(e) {
     const cell = e.target;
     const currentClass = circleTurn ? O_CLASS : X_CLASS
     placeMark(cell, currentClass)
@@ -51,7 +40,80 @@ function handleClick(e) {
         endGame(true)
     }
     swapTurns();
+    aiTurn();
 }
+function aiTurn() {
+    const currentClass = circleTurn ? O_CLASS : X_CLASS
+    for (let i = 0; i < cellElements.length; i++) {
+        if (cellElements[i].innerHTML == "") {
+            cellElements[i].classList.add(currentClass);
+            cellElements[i].innerHTML = currentClass;
+            if(checkWin(currentClass)) {
+                endGame(false, currentClass)
+            } else if (isDraw()) {
+                endGame(true)
+            }
+            swapTurns();
+            return;
+        }
+    }
+}
+function endAIGame(draw, currentClass) {
+    if (draw) {
+        startGame();
+    } else {
+        if (currentClass == X_CLASS) {
+            xCounter++;
+            xCount.innerHTML = xCounter;
+            
+        } else {
+            oCounter++;
+            oCount.innerHTML = oCounter;
+            
+        }
+    }
+}
+function startAIGame() {
+    circleTurn = false;
+    cellElements.forEach(cell => {
+        cell.classList.remove(X_CLASS);
+        cell.classList.remove(O_CLASS);
+        cell.innerHTML = ""
+        cell.removeEventListener("click", handleClickAI)
+        cell.addEventListener("click", handleClickAI, { once: true })
+    });
+}
+
+
+//----------------------
+// restartBtn.addEventListener("click", startGame);
+
+// startGame();
+
+// function startGame() {
+//     circleTurn = false;
+//     cellElements.forEach(cell => {
+//         cell.classList.remove(X_CLASS);
+//         cell.classList.remove(O_CLASS);
+//         cell.innerHTML = ""
+//         cell.removeEventListener("click", handleClick)
+//         cell.addEventListener("click", handleClick, { once: true })
+//     });
+// }
+
+// function handleClick(e) {
+//     const cell = e.target;
+//     const currentClass = circleTurn ? O_CLASS : X_CLASS
+//     placeMark(cell, currentClass)
+//     if(checkWin(currentClass)) {
+//         endGame(false, currentClass)
+//         
+//     } else if (isDraw()) {
+//         endGame(true)
+//         
+//     }
+//     swapTurns();
+// }
 
 function placeMark(cell, currentClass) {
     cell.classList.add(currentClass);
@@ -85,5 +147,5 @@ function endGame(draw, currentClass) {
     }
 }
 function swapTurns() {
-    circleTurn = !circleTurn
+    circleTurn = !circleTurn;
 }

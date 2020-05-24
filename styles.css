@@ -43,6 +43,9 @@ header {
     border: none;
     transition-duration: .2s;
 }
+#aiBtn:focus {
+    outline: none;
+}
 .indicator {
     text-align: center;
     display: flex;
@@ -87,6 +90,9 @@ header {
 #restart:hover {
     background-color: #444444;
     border: none;
+}
+#restart:focus {
+    outline: none;
 }
 .board {
     margin: auto;
