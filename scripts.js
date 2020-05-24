@@ -21,7 +21,7 @@ let restartBtn = document.querySelector("#restart");
 let aiBtn = document.querySelector("#aiBtn");
 
 
-aiBtn.addEventListener("click", startAIGame, { once: true })
+aiBtn.addEventListener("click", handleAI)
 
 function handleAI() {
     circleTurn = false;
@@ -34,11 +34,7 @@ function handleClickAI(e) {
     const cell = e.target;
     const currentClass = circleTurn ? O_CLASS : X_CLASS
     placeMark(cell, currentClass)
-    if(checkWin(currentClass)) {
-        endGame(false, currentClass)
-    } else if (isDraw()) {
-        endGame(true)
-    }
+
     swapTurns();
     aiTurn();
 }
@@ -48,40 +44,11 @@ function aiTurn() {
         if (cellElements[i].innerHTML == "") {
             cellElements[i].classList.add(currentClass);
             cellElements[i].innerHTML = currentClass;
-            if(checkWin(currentClass)) {
-                endGame(false, currentClass)
-            } else if (isDraw()) {
-                endGame(true)
-            }
+           
             swapTurns();
             return;
         }
     }
-}
-function endAIGame(draw, currentClass) {
-    if (draw) {
-        startGame();
-    } else {
-        if (currentClass == X_CLASS) {
-            xCounter++;
-            xCount.innerHTML = xCounter;
-            
-        } else {
-            oCounter++;
-            oCount.innerHTML = oCounter;
-            
-        }
-    }
-}
-function startAIGame() {
-    circleTurn = false;
-    cellElements.forEach(cell => {
-        cell.classList.remove(X_CLASS);
-        cell.classList.remove(O_CLASS);
-        cell.innerHTML = ""
-        cell.removeEventListener("click", handleClickAI)
-        cell.addEventListener("click", handleClickAI, { once: true })
-    });
 }
 
 
@@ -107,10 +74,10 @@ function startAIGame() {
 //     placeMark(cell, currentClass)
 //     if(checkWin(currentClass)) {
 //         endGame(false, currentClass)
-//         
+//         startGame();
 //     } else if (isDraw()) {
 //         endGame(true)
-//         
+//         startGame();
 //     }
 //     swapTurns();
 // }
@@ -138,11 +105,11 @@ function endGame(draw, currentClass) {
         if (currentClass == X_CLASS) {
             xCounter++;
             xCount.innerHTML = xCounter;
-            startGame();
+            
         } else {
             oCounter++;
             oCount.innerHTML = oCounter;
-            startGame();
+            
         }
     }
 }
