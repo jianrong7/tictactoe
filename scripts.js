@@ -17,6 +17,14 @@ let oCounter = 0;
 let xCount = document.querySelector("#xCounter");
 let oCount = document.querySelector("#oCounter");
 let restartBtn = document.querySelector("#restart");
+let aiBtn = document.querySelector("#aiBtn");
+
+
+aiBtn.addEventListener("click", handleAI)
+
+function handleAI() {
+
+}
 
 restartBtn.addEventListener("click", startGame);
 
