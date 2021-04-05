@@ -4,41 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ticTacToe</title>
+    <title>Tic Tac Toe</title>
+    <link rel="shortcut icon" type="image/jpg" href="assets/favicon.png"/>
+    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="styles.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 </head>
 
 <body>
-    <header>Tic Tac Toe
-        <button type="button" id="aiBtn">
-            <span onmouseover="this.innerHTML='play against jianrong7?';
-                            this.style.fontWeight='bold'"
-            onmouseout="this.innerHTML='built by jianrong7';
-                            this.style.fontWeight='normal'">built by jianrong7</span>
-        </button>
+    <header class="title">
+        <span>Tic Tac Toe</span>
     </header>
-    <div class="indicator">
-        <div id="xIndicator">X
-            <div id="xCounter">0</div>
-        </div>
-        <button type="button" id="restart">restart</button>
-        <div id="oIndicator">O
-            <div id="oCounter">0</div>
-        </div>
-    </div>
     <div class="board">
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
+        <div class="cell zero"></div>
+        <div class="cell one"></div>
+        <div class="cell two"></div>
+        <div class="cell three"></div>
+        <div class="cell four"></div>
+        <div class="cell five"></div>
+        <div class="cell six"></div>
+        <div class="cell seven"></div>
+        <div class="cell eight"></div>
     </div>
+    <footer>Created by <a href="https://github.com/jianrong7" target="_blank">jianrong7</a></footer>
 </body>
-<script src="scripts.js"></script>
-
+<script src="scripts.js" defer></script>
 </html>
