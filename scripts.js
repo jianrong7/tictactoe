@@ -8,10 +8,17 @@ const gameBoard = (() => {
     const insertChoice = (id, currentSign) => {
         board[id] = currentSign
     }
-    return { board, insertChoice };
+    const reset = () => {
+        for (let i = 0; i < board.length; i++) {
+            board[i] = "";
+        }
+    }
+    return { board, insertChoice, reset };
 })();
 const displayController = (() => {
     const cells = document.querySelectorAll('.cell')
+    const winnerDiv = document.querySelector('.winner')
+    let restartBtn = document.querySelector('.restart')
 
     cells.forEach(cell => {
         cell.addEventListener('click', (e) => {
@@ -19,9 +26,18 @@ const displayController = (() => {
             gameController.playRound(target.id);
         })
     })
+    
+    restartBtn.addEventListener('click', () => {
+        gameBoard.reset()
+        reset()
+        gameController.reset()
+    })
 
-    const checkBoard = () => {
-
+    const reset = () => {
+        cells.forEach(cell => {
+            cell.innerHTML = ""
+        })
+        winnerDiv.innerHTML = ""
     };
     const updateBoard = (id, currentSign) => {
         cells.forEach(cell => {
@@ -31,11 +47,14 @@ const displayController = (() => {
         })
     };
     const displayWinner = (winner) => {
-        const winnerDiv = document.querySelector('.winner')
-        winnerDiv.innerHTML = winner + " wins!"
+        if (winner === '') {
+            winnerDiv.innerHTML = "It's a draw!"
+        } else {
+            winnerDiv.innerHTML = winner + " wins!"
+        }
     }
 
-    return { updateBoard, displayWinner }
+    return { updateBoard, displayWinner, reset }
 })();
 const gameController = (() => {
     const playerOne = playerFactory('x');
@@ -44,7 +63,7 @@ const gameController = (() => {
     let isOver = false;
     const playRound = (id) => {
         const currentSign = getCurrentPlayerSign()
-        if (!isOver) {
+        if (!isOver && gameBoard.board[id] === '') {
             gameBoard.insertChoice(id, currentSign)
             displayController.updateBoard(id, currentSign)
             checkWinner()
@@ -78,31 +97,18 @@ const gameController = (() => {
             if (combination.every(v => x_index.includes(v))) {
                 displayController.displayWinner('X')
                 isOver = true
-                endGame()
             } else if (combination.every(v => o_index.includes(v))) {
                 displayController.displayWinner('O')
                 isOver = true
-                endGame()
             }
         })
+        if (round === 9) {
+            displayController.displayWinner('')
+        }
     }
-    const endGame = () => {
-        
+    const reset = () => {
+        isOver = false;
+        round = 1;
     }
-    return { playRound }
+    return { playRound, reset }
 })();
-// displayController
-//   Check for changes in gameBoard
-//   Update changes from gameBoard onto screen
-
-// gameController
-//   PlayRound
-//     Player 1 clicks
-//       Check player one choice
-//         Record player one choice onto gameBoard
-//           Update display
-//             Check winner
-//               If win, reset board and declare winner
-//               else, Switch player and round++
-            
-//   If 9 rounds have been reached, end game
