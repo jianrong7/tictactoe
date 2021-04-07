@@ -30,8 +30,12 @@ const displayController = (() => {
             }
         })
     };
+    const displayWinner = (winner) => {
+        const winnerDiv = document.querySelector('.winner')
+        winnerDiv.innerHTML = winner + " wins!"
+    }
 
-    return { updateBoard }
+    return { updateBoard, displayWinner }
 })();
 const gameController = (() => {
     const playerOne = playerFactory('x');
@@ -40,12 +44,12 @@ const gameController = (() => {
     let isOver = false;
     const playRound = (id) => {
         const currentSign = getCurrentPlayerSign()
-        gameBoard.insertChoice(id, currentSign)
-        displayController.updateBoard(id, currentSign)
-        if (round === 9) {
+        if (!isOver) {
+            gameBoard.insertChoice(id, currentSign)
+            displayController.updateBoard(id, currentSign)
             checkWinner()
+            round++;
         }
-        round++;
     }
     const getCurrentPlayerSign = () => {
         return round % 2 === 1 ? playerOne.choice : playerTwo.choice;
@@ -66,14 +70,25 @@ const gameController = (() => {
         for (let i = 0; i < 9; i++) {
             if (gameBoard.board[i] === 'x') {
                 x_index.push(i)
-            } else {
+            } else if (gameBoard.board[i] === 'o') {
                 o_index.push(i)
             }
         }
-        console.log(x_index)
-        console.log(o_index)
+        WINNING_COMBINATIONS.forEach(combination => {
+            if (combination.every(v => x_index.includes(v))) {
+                displayController.displayWinner('X')
+                isOver = true
+                endGame()
+            } else if (combination.every(v => o_index.includes(v))) {
+                displayController.displayWinner('O')
+                isOver = true
+                endGame()
+            }
+        })
     }
+    const endGame = () => {
 
+    }
     return { playRound }
 })();
 // displayController

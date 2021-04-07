@@ -45,6 +45,11 @@ header {
 .zero, .one, .three, .four, .six, .seven {
     border-right: 2px solid var(--accents);
 }
+.winner {
+    margin-top: 70px;
+    font-size: 60px;
+    font-weight: bold;
+}
 /* Footer */
 footer {
     left: 0;
