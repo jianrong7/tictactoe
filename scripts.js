@@ -102,8 +102,9 @@ const gameController = (() => {
                 isOver = true
             }
         })
-        if (round === 9) {
+        if (round === 9 && !isOver) {
             displayController.displayWinner('')
+            isOver = true
         }
     }
     const reset = () => {
