@@ -1,5 +1,4 @@
 "use strict";
-
 const playerFactory = (choice) => {
     return { choice };
 };
@@ -15,52 +14,26 @@ const gameBoard = (() => {
     }
     return { board, insertChoice, reset };
 })();
-const displayController = (() => {
-    const cells = document.querySelectorAll('.cell')
-    const winnerDiv = document.querySelector('.winner')
-    let restartBtn = document.querySelector('.restart')
-
-    cells.forEach(cell => {
-        cell.addEventListener('click', (e) => {
-            const { target } = e;
-            gameController.playRound(target.id);
-        })
-    })
-    
-    restartBtn.addEventListener('click', () => {
-        gameBoard.reset()
-        reset()
-        gameController.reset()
-    })
-
-    const reset = () => {
-        cells.forEach(cell => {
-            cell.innerHTML = ""
-        })
-        winnerDiv.innerHTML = ""
-    };
-    const updateBoard = (id, currentSign) => {
-        cells.forEach(cell => {
-            if (cell.id == id) {
-                cell.innerHTML = currentSign
-            }
-        })
-    };
-    const displayWinner = (winner) => {
-        if (winner === '') {
-            winnerDiv.innerHTML = "It's a draw!"
-        } else {
-            winnerDiv.innerHTML = winner + " wins!"
-        }
-    }
-
-    return { updateBoard, displayWinner, reset }
-})();
 const gameController = (() => {
     const playerOne = playerFactory('x');
     const playerTwo = playerFactory('o');
     let round = 1;
     let isOver = false;
+    let ai = false;
+
+    const getRandomInt = (min, max) => {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    const aiMode = () => {
+        ai = true;
+        const number = getRandomInt(0, 9);
+        playRound(number)
+    }
+    const playerMode = () => {
+        ai = false;
+    }
     const playRound = (id) => {
         const currentSign = getCurrentPlayerSign()
         if (!isOver && gameBoard.board[id] === '') {
@@ -68,6 +41,9 @@ const gameController = (() => {
             displayController.updateBoard(id, currentSign)
             checkWinner()
             round++;
+        }
+        if (round % 2 !== 0 && ai && isOver === false) {
+            aiMode()
         }
     }
     const getCurrentPlayerSign = () => {
@@ -111,5 +87,58 @@ const gameController = (() => {
         isOver = false;
         round = 1;
     }
-    return { playRound, reset }
+    return { playRound, reset, aiMode, playerMode }
+})();
+const displayController = (() => {
+    const cells = document.querySelectorAll('.cell')
+    const winnerDiv = document.querySelector('.winner')
+    const pvpBtn = document.querySelector('.player')
+    const aiBtn = document.querySelector('.ai')
+    const restartBtn = document.querySelector('.restart')
+
+    cells.forEach(cell => {
+        cell.addEventListener('click', (e) => {
+            const { target } = e;
+            gameController.playRound(target.id);
+        })
+    })
+    
+    restartBtn.addEventListener('click', () => {
+        reset()
+        gameController.playerMode()
+    })
+
+    pvpBtn.addEventListener('click', () => {
+        reset()
+        gameController.playerMode()
+    })
+    aiBtn.addEventListener('click', () => {
+        reset()
+        gameController.aiMode()
+    })
+
+    const reset = () => {
+        gameBoard.reset()
+        cells.forEach(cell => {
+            cell.innerHTML = ""
+        })
+        winnerDiv.innerHTML = ""
+        gameController.reset()
+    };
+    const updateBoard = (id, currentSign) => {
+        cells.forEach(cell => {
+            if (cell.id == id) {
+                cell.innerHTML = currentSign
+            }
+        })
+    };
+    const displayWinner = (winner) => {
+        if (winner === '') {
+            winnerDiv.innerHTML = "It's a draw!"
+        } else {
+            winnerDiv.innerHTML = winner + " wins!"
+        }
+    }
+
+    return { updateBoard, displayWinner }
 })();
