@@ -1,16 +1,22 @@
-# tic tac toe
+# Tic-Tac-Toe
 
-[tic tac toe project](https://jianrong7.github.io/tictactoe/) for The Odin Project.
-Using HTMl, CSS and vanilla Javascript.
+### [Live Demo](https://jianrong7.github.io/tictactoe/)
 
-UI Concept Idea from [here](https://i.imgur.com/nSbjsv0.png).
+#### 📝 Description
+Vanilla JS Tic Tac Toe project I made from the Odin Project Curriculum.
 
-## What I Learnt
-- Familiarise with CSS Grid
-- More familiar with flag logic
+#### 💡 Features
+* Play against CPU bot
+* Play with a second person
 
-## What I need to improve on
-- Working on logical steps of how the game works
-- How the AI works
-- Minimax algorithm
-- Implementing AI into the game
+#### 🛠️ Built with
+* HTML
+* CSS
+* JavaScript
+
+#### What I Learnt
+- Recursive function using Minimax AI
+- Familiarise with Grid CSS
+
+#### What I can work on
+- Make website mobile responsive

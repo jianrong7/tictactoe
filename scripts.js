@@ -22,14 +22,14 @@ const gameController = (() => {
     let ai = false;
 
     let scores = {
-        'X': 1,
-        'O': -1,
+        'X': 10,
+        'O': -10,
         'tie': 0
     }; 
     const aiMode = () => {
         ai = true;
-        let move = 0;
         let bestScore = -Infinity;
+        let move;
         for (let i = 0; i < 9; i++) {
             if (gameBoard.board[i] === '') {
                 gameBoard.board[i] = 'x'
@@ -44,7 +44,6 @@ const gameController = (() => {
         playRound(move)
     }
     const minimax = (board, depth, isMaximizingPlayer) => {
-        isOver = false
         let result = checkWinner();
         if (result !== null) {
             return scores[result];
