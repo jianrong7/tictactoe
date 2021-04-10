@@ -86,6 +86,9 @@ header {
     font-weight: bold;
     background-color: var(--accents);
 }
+.player {
+    background-color: #0b40a1;
+}
 .player:hover, .ai:hover {
     cursor: pointer;
     background-color: #194eaf;

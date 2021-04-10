@@ -106,15 +106,21 @@ const displayController = (() => {
     restartBtn.addEventListener('click', () => {
         reset()
         gameController.playerMode()
+        pvpBtn.style.backgroundColor = "#0b40a1"
+        aiBtn.style.backgroundColor = "#216EFC"
     })
 
     pvpBtn.addEventListener('click', () => {
         reset()
         gameController.playerMode()
+        pvpBtn.style.backgroundColor = "#0b40a1"
+        aiBtn.style.backgroundColor = "#216EFC"
     })
     aiBtn.addEventListener('click', () => {
         reset()
         gameController.aiMode()
+        pvpBtn.style.backgroundColor = "#216EFC"
+        aiBtn.style.backgroundColor = "#0b40a1"
     })
 
     const reset = () => {
