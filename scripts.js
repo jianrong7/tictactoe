@@ -21,15 +21,62 @@ const gameController = (() => {
     let isOver = false;
     let ai = false;
 
-    const getRandomInt = (min, max) => {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+    let scores = {
+        'X': 1,
+        'O': -1,
+        'tie': 0
+    }; 
     const aiMode = () => {
         ai = true;
-        const number = getRandomInt(0, 9);
-        playRound(number)
+        let move = 0;
+        let bestScore = -Infinity;
+        for (let i = 0; i < 9; i++) {
+            if (gameBoard.board[i] === '') {
+                gameBoard.board[i] = 'x'
+                let score = minimax(gameBoard.board, 0, false);
+                gameBoard.board[i] = '';
+                if (score > bestScore) {
+                    bestScore = score;
+                    move = i;
+                }
+            }
+        }
+        playRound(move)
+    }
+    const minimax = (board, depth, isMaximizingPlayer) => {
+        isOver = false
+        let result = checkWinner();
+        if (result !== null) {
+            return scores[result];
+        } 
+
+        if (isMaximizingPlayer) {
+            let bestScore = -Infinity;
+            for (let i = 0; i < 9; i++) {
+                if (gameBoard.board[i] === '') {
+                    gameBoard.board[i] = 'x'
+                    let score = minimax(gameBoard.board, depth + 1, false)
+                    gameBoard.board[i] = ''
+                    if (score > bestScore) {
+                        bestScore = score
+                    }
+                }
+            }
+            return bestScore;
+        } else {
+            let bestScore = Infinity;
+            for (let i = 0; i < 9; i++) {
+                if (gameBoard.board[i] === '') {
+                    gameBoard.board[i] = 'o'
+                    let score = minimax(gameBoard.board, depth + 1, true)
+                    gameBoard.board[i] = ''
+                    if (score < bestScore) {
+                        bestScore = score
+                    }
+                }
+            }
+            return bestScore;
+        }
     }
     const playerMode = () => {
         ai = false;
@@ -39,7 +86,17 @@ const gameController = (() => {
         if (!isOver && gameBoard.board[id] === '') {
             gameBoard.insertChoice(id, currentSign)
             displayController.updateBoard(id, currentSign)
-            checkWinner()
+            let winner = checkWinner()
+            if (winner === 'X') {
+                displayController.displayWinner('X')
+                isOver = true
+            } else if (winner === 'O') {
+                displayController.displayWinner('O')
+                isOver = true
+            } else if (winner === 'tie') {
+                displayController.displayWinner('')
+                isOver = true
+            }
             round++;
         }
         if (round % 2 !== 0 && ai && isOver === false) {
@@ -50,6 +107,7 @@ const gameController = (() => {
         return round % 2 === 1 ? playerOne.choice : playerTwo.choice;
     }
     const checkWinner = () => {
+        let winner = null;
         const WINNING_COMBINATIONS = [
             [0, 1, 2],
             [3, 4, 5],
@@ -71,17 +129,15 @@ const gameController = (() => {
         }
         WINNING_COMBINATIONS.forEach(combination => {
             if (combination.every(v => x_index.includes(v))) {
-                displayController.displayWinner('X')
-                isOver = true
+                winner = 'X'
             } else if (combination.every(v => o_index.includes(v))) {
-                displayController.displayWinner('O')
-                isOver = true
+                winner = 'O'
             }
         })
         if (round === 9 && !isOver) {
-            displayController.displayWinner('')
-            isOver = true
+            winner = 'tie'
         }
+        return winner
     }
     const reset = () => {
         isOver = false;
